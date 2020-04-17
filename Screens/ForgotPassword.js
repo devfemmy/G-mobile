@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, Image, TextInput, TouchableWithoutFeedback, Keyboard, ScrollView, SafeAreaView} from 'react-native';
 import CustomButton from '../Components/button';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import CustomBtn from '../Components/CustomBtn';
 
-const ForgotPassword = () => {
+
+const ForgotPassword = ({navigation}) => {
     const [value, onChangeText] = useState('');
     const keyboardClose = () => {
         Keyboard.dismiss()
@@ -12,6 +15,14 @@ const ForgotPassword = () => {
             <SafeAreaView>
             <TouchableWithoutFeedback onPress= {keyboardClose}>
         <View>
+        <View style= {styles.backContainer}>
+        <HeaderButtons HeaderButtonComponent= {CustomBtn}>
+              <Item title= "Back"
+                iconName= "ios-arrow-round-back"
+                onPress={() => navigation.goBack()} />
+        </HeaderButtons>
+        </View>
+  
             <View style= {styles.imageContainer}>
             <Image 
             style= {styles.imageStyle}
@@ -68,6 +79,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 18,
         marginVertical: 15
+    },
+    backContainer: {
+        marginVertical: 10
     },
     textSyle: {
         color: 'white',

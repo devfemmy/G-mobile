@@ -1,8 +1,42 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView, SafeAreaView, Text, ImageBackground, Image } from 'react-native';
+import { View, StyleSheet, ScrollView,AsyncStorage, SafeAreaView, Text, ImageBackground, Image } from 'react-native';
 import Cards from '../../Components/cards';
 
+
 const Home = () => {
+    const [memberId, setMembershipId] = React.useState('');
+    const [firstname, setFirstName] = React.useState('');
+    const [currentBal, setCurrentBal] = React.useState('');
+    const [Blockedpts, setBlockedPts] = React.useState('');
+
+    const firstLetter = firstname.charAt(0);
+    const fixedBal = parseInt(currentBal)
+    const fixedPts = parseInt(Blockedpts)
+
+    const id = AsyncStorage.getItem('membershipId').then(
+        res => {
+           setMembershipId(res)
+        }
+      ).catch(err => console.log(err));
+      const name = AsyncStorage.getItem('firstname').then(
+       res => {
+          setFirstName(res)
+       }
+     ).catch(err => console.log(err));
+     const bal = AsyncStorage.getItem('currentBal').then(
+       res => {
+          setCurrentBal(res)
+   
+       }
+     ).catch(err => console.log(err));
+
+     const pts = AsyncStorage.getItem('blockedpts').then(
+        res => {
+           setBlockedPts(res)
+    
+        }
+      ).catch(err => console.log(err));
+
     return (
         <ScrollView style = {styles.screen}>
             <SafeAreaView>
@@ -17,14 +51,16 @@ const Home = () => {
 
                                 <View style= {styles.profileDiv}>
                                     <View style= {styles.circularDiv}>
-                                    <Text style= {styles.textStyle}>O</Text>
+                                    <Text style= {styles.textStyle}>
+                                        {firstLetter}
+                                    </Text>
                                     </View>
                                     <View style= {styles.textsDiv}>
                                         <Text style= {styles.textStyle2}>
-                                            Oluwafemi
+                                            {firstname}
                                         </Text>
                                         <Text style= {styles.textStyle3}>
-                                            Membership ID: 321567
+                                            Membership ID: {memberId}
                                         </Text>
                                     </View>
                                     
@@ -34,13 +70,13 @@ const Home = () => {
                         </View>
                         <View style= {styles.cardDiv}>
                             <Cards 
-                            imageUrl
+                            imageUrl= {require('../../assets/current-bal-icon.png')}
                             balance= "Current Balance:" 
-                            figure = "12344566" />
+                            figure = {fixedBal} />
                             <Cards 
-                            imageUrl
-                            balance= "Available Balance:" 
-                            figure = "12344566" />
+                             imageUrl= {require('../../assets/points-gained-icon.png')}
+                            balance= "Blocked Points" 
+                            figure = {fixedPts} />
                         </View>
                        
                     </View>
@@ -52,12 +88,13 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
         backgroundColor: 'white',
-        paddingLeft: '8%',
-        paddingRight: '8%'
+        paddingLeft: '5%',
+        paddingRight: '5%'
     },
     textStyle: {
         fontWeight: 'bold',
-        fontSize: 18
+        fontSize: 18,
+        
     },
     textsDiv: {
         marginVertical: 8
@@ -110,4 +147,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Home;
+export default  Home;

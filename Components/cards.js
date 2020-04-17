@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Image } from 'react-native';
 
 const Cards = (props) => {
     return (
@@ -9,7 +9,7 @@ const Cards = (props) => {
                 <Text style= {styles.textStyle2}>{props.figure}</Text>
             </View>
             <View>
-                <Text>Hello</Text>
+                <Image style= {styles.imageStyle} source= {props.imageUrl} />
             </View>
         </View>
     )
@@ -25,6 +25,10 @@ const styles = StyleSheet.create({
         padding: 20,
         height: 70,
         marginBottom: 15
+    },
+    imageStyle: {
+        height: 20,
+        width: 20
     },
     textStyle: {
         color: 'white',

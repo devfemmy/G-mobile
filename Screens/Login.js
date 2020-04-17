@@ -1,13 +1,94 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, Image, TextInput, TouchableWithoutFeedback, Keyboard, ScrollView, SafeAreaView} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Text, StyleSheet, AsyncStorage,
+     Image, TouchableWithoutFeedback, 
+     Alert,
+     Keyboard, ScrollView, SafeAreaView, ActivityIndicator} from 'react-native';
 import CustomButton from '../Components/button';
+import {AuthContext} from '../Navigation/DrawerNav'
+import FormInput from '../Components/FormInput';
+import axios from 'axios';
 
-const LoginPage = () => {
-    const [value, onChangeText] = useState('');
-    const [password, onChangePassword] = useState('');
+
+const LoginPage = (props) => {
+    console.log('MY PROPS', props)
+    const { signIn} = React.useContext(AuthContext);
+    const { signOut} = React.useContext(AuthContext);
+
+    const [email, setUsername] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const [button, setBtn] = useState(false)
+    // const [value, onChangeText] = useState('');
+    // const [password, onChangePassword] = useState('');
     const keyboardClose = () => {
         Keyboard.dismiss()
     }
+    const logInUser = ()=> {
+        if (email === '' || password === '') {
+            alert("Please fill in your correct credentials")
+        } else {
+            // {props.userButton}
+            setBtn(true)
+            // signIn({email:email.email,password:email.password});
+            const data = {
+                email: email,
+                password: password
+            }
+            console.log('33', data)
+            axios.post('https://demoperxapi.perxclm.com/perx/public/api/grandloyalty/login', data)
+            .then( res => {
+                setBtn(false)
+                console.log('API', res)
+              const response = res.data;
+              if (response.status === 1) {
+                const token = response.success.token;
+                const firstname = response.success.user.First_name;
+                const memberId = response.success.user.Membership_id;
+                const currentBal = response.success.user.Available_balance;
+                const blockedPts = response.success.user.Blocked_points;
+                AsyncStorage.setItem('membershipId', memberId);
+                AsyncStorage.setItem('firstname', firstname);
+                AsyncStorage.setItem('currentBal', currentBal);
+                AsyncStorage.setItem('blockedpts', blockedPts);
+                AsyncStorage.setItem('Mytoken', "Bearer "+token);
+            
+                signIn({token:token});
+    
+              }else {
+               
+           
+                alert('incorrect username or password')
+              }
+              
+            }).catch(err => {
+                const code = err.response.status;
+                if (code === 401) {
+                    Alert.alert(
+                        'Error!',
+                        'Expired Token',
+                        [
+                          {text: 'OK', onPress: () => signOut()},
+                        ],
+                        { cancelable: false }
+                      )
+                  
+                } else {
+                    setBtn(false)
+                    Alert.alert(
+                        'Network Error',
+                        'Please Try Again',
+                        [
+                          {text: 'OK', onPress: () =>  setBtn(false)},
+                        ],
+                        { cancelable: false }
+                      )
+                }
+            })
+           
+   
+
+        }
+      }
+
     return (
         <ScrollView style = {styles.screen}>
             <SafeAreaView>
@@ -23,34 +104,33 @@ const LoginPage = () => {
                 <Text style= {styles.textSyle}>Login</Text>
                 <Text style= {styles.textSyle2}>Login to your Grandsquare Account</Text>
                 <View style= {styles.inputContainer}>
-               <TextInput style= {styles.inputStyle} 
+                    <FormInput 
                     placeholder= "Username" 
                     placeholderTextColor= "grey"
-                    selectionColor = 'white'
-                    inlineImageLeft = "username"
-                    autoCorrect= {false}
-                    autoCapitalize= 'none'
-                    onChangeText={text => onChangeText(text)}
-                    value={value} />
-                    <TextInput style= {styles.inputStyle} 
+                    secureTextEntry = {false}
+                    value={email}
+                    onChangeText={setUsername}
+                    />
+                    <FormInput 
                     placeholder= "Password" 
                     placeholderTextColor= "grey"
-                    selectionColor = 'white'
-                    inlineImageLeft = "username"
-                    secureTextEntry
-                    autoCorrect= {false}
-                    autoCapitalize= 'none'
-                    onChangeText={password => onChangePassword(password)}
-                    value={password} />
+                    secureTextEntry = {true}
+                    value={password}
+                    onChangeText={setPassword}
+                    />
                
                 </View>
 
                 <View style= {styles.btnContainer}>
-                        <CustomButton
-                        textColor = "black" 
-                        bgColor= "white" 
-                        name = "Login" />
-                        <Text style= {styles.btnTextStyle}>
+                    {button ? <ActivityIndicator  size="large" color="#fff" /> : 
+                                        <CustomButton
+                                        clicked={() => logInUser()}
+                                        textColor = "black" 
+                                        bgColor= "white" 
+                                        name = "Login" />
+                    }
+        
+                        <Text   onPress={() => props.navigation.navigate('ForgotPass')} style= {styles.btnTextStyle}>
                             Forgot Password?
                         </Text>
                 </View>
