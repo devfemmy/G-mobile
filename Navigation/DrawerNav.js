@@ -13,6 +13,7 @@ import LoginNavigator from './Navigators/LoginNavigator';
 import LoginPage from '../Screens/Login';
 import CustomDrawerContent from './Navigators/CustomDrawer';
 import EventIndicator from '../Components/EventIndicator';
+import CardNavigator from './Navigators/CardNavigator';
 
 
 
@@ -144,6 +145,7 @@ const DrawerNav = (props) => {
                     <Drawer.Screen name="Notification" component={NotificationNavigator} />
                     <Drawer.Screen name="Statement" component={StatementNavigator} />
                     <Drawer.Screen name="Security" component={ChangePasNavigator} />
+                    <Drawer.Screen name="My Card" component={CardNavigator} />
                     {/* <Drawer.Screen name="Log Out" component={LoginPage} /> */}
           </>
         )}

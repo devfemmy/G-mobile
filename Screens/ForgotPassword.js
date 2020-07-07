@@ -5,6 +5,7 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomBtn from '../Components/CustomBtn';
 
 
+
 const ForgotPassword = ({navigation}) => {
     const [value, onChangeText] = useState('');
     const keyboardClose = () => {
@@ -50,6 +51,7 @@ const ForgotPassword = ({navigation}) => {
                         bgColor= "white" 
                         name = "Reset Password" />
                 </View>
+      
  
             </View>
 
@@ -81,7 +83,8 @@ const styles = StyleSheet.create({
         marginVertical: 15
     },
     backContainer: {
-        marginVertical: 10
+        marginVertical: 10,
+        alignItems: 'flex-start'
     },
     textSyle: {
         color: 'white',

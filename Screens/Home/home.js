@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView,AsyncStorage, SafeAreaView, Text, ImageBackground, Image } from 'react-native';
+import { View, StyleSheet, ScrollView,AsyncStorage, 
+    SafeAreaView, Text, ImageBackground, Image } from 'react-native';
 import Cards from '../../Components/cards';
 
 
