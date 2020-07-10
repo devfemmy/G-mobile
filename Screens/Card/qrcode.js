@@ -22,11 +22,13 @@ const QrCodeScreen = () => {
            </View>
            <View style= {styles.flexContainer}>
                 <View style= {styles.qrContainer}>
+                <Text style= {styles.textStyling}>Membership ID: {QrData}</Text>
                 <QRCode
                 value={QrData}
                 size={400}
                 bgColor='black'
                 fgColor='white'/>
+               
                 </View>
            
            </View>
@@ -42,6 +44,12 @@ const styles = StyleSheet.create({
     },
     flexContainer: {
         marginHorizontal: '25%'
+    },
+    textStyling: {
+        textAlign: 'center',
+        fontSize: 16,
+        marginVertical: 10
+        // fontWeight: 'bold'
     },
     qrContainer: {
       

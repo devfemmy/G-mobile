@@ -14,6 +14,8 @@ import LoginPage from '../Screens/Login';
 import CustomDrawerContent from './Navigators/CustomDrawer';
 import EventIndicator from '../Components/EventIndicator';
 import CardNavigator from './Navigators/CardNavigator';
+import {Ionicons} from 'react-native-vector-icons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 
 
@@ -140,12 +142,52 @@ const DrawerNav = (props) => {
           />
         ) : (
           <>
-         <Drawer.Screen name="Home" component={HomeNavigator} />
-                    <Drawer.Screen name="Profile" component={ProfileNavigator} />
-                    <Drawer.Screen name="Notification" component={NotificationNavigator} />
-                    <Drawer.Screen name="Statement" component={StatementNavigator} />
-                    <Drawer.Screen name="Security" component={ChangePasNavigator} />
-                    <Drawer.Screen name="My Card" component={CardNavigator} />
+         <Drawer.Screen name="Home" component={HomeNavigator} options= {{
+                       drawerIcon: config => <Ionicons
+                       size={22}
+                       color= "white"
+                       name={Platform.OS === 'android' ? 'md-home' : 'ios-home'}></Ionicons>
+                    }} />
+                    <Drawer.Screen name="Profile" component={ProfileNavigator}
+                     options= {{
+                      drawerIcon: config => <Ionicons
+                      size={22}
+                      color= "white"
+                      name={Platform.OS === 'android' ? 'md-person' : 'ios-person'}></Ionicons>
+                    }}
+                    />
+                    <Drawer.Screen name="Notification" component={NotificationNavigator}
+                       options= {{
+                        drawerIcon: config => <Ionicons
+                        size={24}
+                        color= "white"
+                        name={Platform.OS === 'android' ? 'md-notifications' : 'ios-notifications'}></Ionicons>
+                    }}
+                    />
+                    <Drawer.Screen name="Statement" component={StatementNavigator}
+                       options= {{
+                        drawerIcon: config => <Icon
+                        size={20}
+                        color= "white"
+                        name={Platform.OS === 'android' ? 'account-badge-alert' : 'account-badge-alert'}></Icon>
+                      }}
+                    />
+                    <Drawer.Screen name="Security" component={ChangePasNavigator}
+                     options= {{
+                      drawerIcon: config => <Icon
+                      size={22}
+                      color= "white"
+                      name={Platform.OS === 'android' ? 'security' : 'security'}></Icon>
+                      }}
+                    />
+                    <Drawer.Screen name="My Card" component={CardNavigator}
+                     options= {{
+                      drawerIcon: config => <Ionicons
+                      size={22}
+                      color= "white"
+                      name={Platform.OS === 'android' ? 'md-card' : 'ios-card'}></Ionicons>
+                    }}
+                    />
                     {/* <Drawer.Screen name="Log Out" component={LoginPage} /> */}
           </>
         )}
