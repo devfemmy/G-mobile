@@ -19,8 +19,8 @@ const StatementCard = (props) => {
                 {props.date}
             </Text>
             </View>
-            <View>
-            <Text style= {{...styles.textStyle, ...{color:props.color}}}>
+            <View style= {styles.priceContainer}>
+            <Text style= {{...styles.textStyle7, ...{color:props.color}}}>
                 {props.figure}
             </Text>
             </View>
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     },
     container: {
         // backgroundColor: 'red',
-        width: '55%'
+        width: '63%'
     },
     dateStyle: {
         marginVertical: 5,
@@ -53,15 +53,26 @@ const styles = StyleSheet.create({
     textStyle2: {
         fontWeight: 'bold'
     },
+    priceContainer: {
+        width: '15%'
+    },
     textStyle: {
         color: '#ea0000',
         fontSize: 15,
         marginVertical: 2,
         fontWeight: 'bold'
     },
+    textStyle7: {
+        color: '#ea0000',
+        fontSize: 15,
+        marginVertical: 2,
+        fontWeight: 'bold',
+        textAlign: 'right'
+    },
     imageStyle: {
         width: 48,
-        height: 40
+        height: 40,
+        resizeMode: 'contain'
     }
 })
 export default StatementCard;

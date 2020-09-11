@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Picker, StyleSheet } from "react-native";
 import RNPickerSelect from 'react-native-picker-select';
 
-const PickerInput = (props) => {
+const BranchPicker = () => {
   // const [selectedValue, setSelectedValue] = useState("java");
 const [border, setBorder] = useState('black');
 const onFocus = () => {
@@ -59,4 +59,4 @@ const pickerSelectStyles = StyleSheet.create({
 
 
 
-export default PickerInput;
+export default BranchPicker;

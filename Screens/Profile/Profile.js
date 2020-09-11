@@ -176,7 +176,7 @@ const ProfilePage = (props) => {
             placeholder= "Email Address"
             keyboardType= "email-address"
             />
-            <PickerInput />
+            <PickerInput  />
             {/* <CustomInput placeholder= "Date of Birth" /> */}
             </View>
             <View style= {styles.btnContainer}>

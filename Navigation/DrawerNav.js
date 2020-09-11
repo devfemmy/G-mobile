@@ -8,7 +8,6 @@ import NotificationNavigator from './Navigators/NotificationNavigator';
 import StatementNavigator from './Navigators/StatementNavigator';
 import ChangePasNavigator from './Navigators/ChangePasNavigator';
 import axios from 'axios';
-
 import LoginNavigator from './Navigators/LoginNavigator';
 import LoginPage from '../Screens/Login';
 import CustomDrawerContent from './Navigators/CustomDrawer';
@@ -16,6 +15,7 @@ import EventIndicator from '../Components/EventIndicator';
 import CardNavigator from './Navigators/CardNavigator';
 import {Ionicons} from 'react-native-vector-icons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import CatalogNavigator from './Navigators/CatalogNavigator';
 
 
 
@@ -142,7 +142,7 @@ const DrawerNav = (props) => {
           />
         ) : (
           <>
-         <Drawer.Screen name="Home" component={HomeNavigator} options= {{
+                  <Drawer.Screen name="Home" component={HomeNavigator} options= {{
                        drawerIcon: config => <Ionicons
                        size={22}
                        color= "white"
@@ -154,6 +154,14 @@ const DrawerNav = (props) => {
                       size={22}
                       color= "white"
                       name={Platform.OS === 'android' ? 'md-person' : 'ios-person'}></Ionicons>
+                    }}
+                    />
+                    <Drawer.Screen name="Catalogue" component={CatalogNavigator}
+                     options= {{
+                      drawerIcon: config => <Ionicons
+                      size={22}
+                      color= "white"
+                      name={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}></Ionicons>
                     }}
                     />
                     <Drawer.Screen name="Notification" component={NotificationNavigator}
@@ -188,6 +196,7 @@ const DrawerNav = (props) => {
                       name={Platform.OS === 'android' ? 'md-card' : 'ios-card'}></Ionicons>
                     }}
                     />
+
                     {/* <Drawer.Screen name="Log Out" component={LoginPage} /> */}
           </>
         )}

@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, AsyncStorage,
      Image, TouchableWithoutFeedback, 
-     Alert,
-     Keyboard, ScrollView, SafeAreaView, ActivityIndicator} from 'react-native';
+     Alert,Dimensions,
+     Keyboard, ScrollView, SafeAreaView, ActivityIndicator, ImageBackground} from 'react-native';
 import CustomButton from '../Components/button';
 import {AuthContext} from '../Navigation/DrawerNav'
 import FormInput from '../Components/FormInput';
@@ -90,10 +90,11 @@ const LoginPage = (props) => {
       }
 
     return (
-        <ScrollView style = {styles.screen}>
-            <SafeAreaView>
-            <TouchableWithoutFeedback onPress= {keyboardClose}>
-        <View>
+        <ScrollView>
+            {/* <SafeAreaView>
+            <TouchableWithoutFeedback onPress= {keyboardClose}> */}
+            <View style = {styles.screen}>
+            <ImageBackground source= {require('../assets/login.png')} style= {styles.imageBackground}>
             <View style= {styles.imageContainer}>
             <Image 
             style= {styles.imageStyle}
@@ -136,11 +137,10 @@ const LoginPage = (props) => {
                 </View>
  
             </View>
-
-
+            </ImageBackground>
         </View>
-        </TouchableWithoutFeedback>
-            </SafeAreaView>
+        {/* </TouchableWithoutFeedback>
+            </SafeAreaView> */}
         </ScrollView>
 
 
@@ -150,9 +150,9 @@ const LoginPage = (props) => {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        backgroundColor: '#000075',
-        paddingLeft: '8%',
-        paddingRight: '8%'
+        // backgroundColor: '#000075',
+        // paddingLeft: '8%',
+        // paddingRight: '8%'
     },
     inputContainer: {
         marginVertical: 20
@@ -178,6 +178,10 @@ const styles = StyleSheet.create({
       
       
     },
+    imageBackground: {
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height,
+    },
     textSyle2: {
         color: 'white',
         fontSize: 15,
@@ -186,7 +190,8 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         width: '100%',
-        marginVertical: 50
+        marginVertical: 50,
+        padding: '8%'
     },
     imageStyle: {
         borderRadius: 10,
@@ -194,7 +199,7 @@ const styles = StyleSheet.create({
         height: 80
     },
     loginContainer: {
-        flex: 1,
+        padding: '8%'
     }
 })
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View, TextInput } from 'react-native'
 
 const FormInput = (props) => {
-  console.log('ALL', props)
+ 
     return (
         <View>
         <TextInput style= {styles.inputStyle} 

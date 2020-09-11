@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, Image, TextInput, TouchableWithoutFeedback, Keyboard, ScrollView, SafeAreaView} from 'react-native';
+import {View, Text, StyleSheet,Dimensions, Image, TextInput, TouchableWithoutFeedback, Keyboard, ScrollView, SafeAreaView, ImageBackground} from 'react-native';
 import CustomButton from '../Components/button';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomBtn from '../Components/CustomBtn';
@@ -12,9 +12,10 @@ const ForgotPassword = ({navigation}) => {
         Keyboard.dismiss()
     }
     return (
-        <ScrollView style = {styles.screen}>
-            <SafeAreaView>
-            <TouchableWithoutFeedback onPress= {keyboardClose}>
+        <ScrollView>
+        <ImageBackground source= {require('../assets/password.png')} style= {styles.imageBack}>
+        <SafeAreaView  style = {styles.screen}>
+            {/* <TouchableWithoutFeedback onPress= {keyboardClose}> */}
         <View>
         <View style= {styles.backContainer}>
         <HeaderButtons HeaderButtonComponent= {CustomBtn}>
@@ -57,8 +58,10 @@ const ForgotPassword = ({navigation}) => {
 
 
         </View>
-        </TouchableWithoutFeedback>
-            </SafeAreaView>
+        {/* </TouchableWithoutFeedback> */}
+         </SafeAreaView>
+        </ImageBackground>
+
         </ScrollView>
 
 
@@ -68,9 +71,15 @@ const ForgotPassword = ({navigation}) => {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        backgroundColor: '#D1181F',
-        paddingLeft: '8%',
-        paddingRight: '8%'
+        // backgroundColor: '#D1181F',
+        margin: '8%'
+    },
+    imageBack: {
+        width: Dimensions.get('window').width,
+        minHeight: '100%',
+        // maxHeight: Dimensions.get('window').height,
+        // height: 250,
+        resizeMode: 'contain'
     },
     inputContainer: {
         marginVertical: 20

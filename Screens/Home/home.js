@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, ScrollView,AsyncStorage, 
     SafeAreaView, Text, ImageBackground, Image } from 'react-native';
 import Cards from '../../Components/cards';
+import HomeCard from '../../Components/HomeCard';
 
 
 const Home = () => {
@@ -79,6 +80,25 @@ const Home = () => {
                             balance= "Blocked Points" 
                             figure = {fixedPts} />
                         </View>
+                        <View style= {styles.recentlyViewed}>
+                            <Text style= {styles.textRecent}>MOST REDEEMED ITEMS</Text>
+                            <HomeCard 
+                            price= "4083 Points"
+                            product= "Sunlight 2in1 Hand Washing Powder 2Kg"
+                            image= {require('../../assets/product.png')} />
+                            <HomeCard 
+                            price= "4083 Points"
+                            product= "Sunlight 2in1 Hand Washing Powder 2Kg"
+                            image= {require('../../assets/product.png')} />
+                            <HomeCard 
+                            price= "4083 Points"
+                            product= "Sunlight 2in1 Hand Washing Powder 2Kg"
+                            image= {require('../../assets/product.png')} />
+                            <HomeCard 
+                            price= "4083 Points"
+                            product= "Sunlight 2in1 Hand Washing Powder 2Kg"
+                            image= {require('../../assets/product.png')} />
+                        </View>
                        
                     </View>
             </SafeAreaView>
@@ -88,7 +108,7 @@ const Home = () => {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: '#F3F4FC',
         paddingLeft: '5%',
         paddingRight: '5%'
     },
@@ -116,7 +136,11 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     profileDiv: {
-        marginVertical: 220
+        marginVertical: 150
+    },
+    textRecent: {
+        fontSize: 16,
+        color: '#939393'
     },
     circularDiv: {
         height: 30,
@@ -129,7 +153,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     innerDiv: {
-        marginVertical: 20,
+        marginVertical: 10,
         marginLeft: 20,
         
     },
@@ -138,7 +162,7 @@ const styles = StyleSheet.create({
     },
     imageStyle: {
         width: '100%',
-        height: 380,
+        height: 300,
         resizeMode: 'cover'
     },
     innerImg: {

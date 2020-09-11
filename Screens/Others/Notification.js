@@ -63,7 +63,7 @@ const NotificationPage = (props) => {
         .catch( err => {console.log(err)}) 
         
 
-      });
+      }, []);
       let showNotification = (
           <View>
               <EventIndicator color = "#000075" />
