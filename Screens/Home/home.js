@@ -1,15 +1,18 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { View, StyleSheet, ScrollView,AsyncStorage, 
-    SafeAreaView, Text, ImageBackground, Image } from 'react-native';
+    SafeAreaView, Text,Alert, ImageBackground, Image } from 'react-native';
 import Cards from '../../Components/cards';
 import HomeCard from '../../Components/HomeCard';
+import axios from '../../axios.req';
 
 
-const Home = () => {
+const Home = (props) => {
     const [memberId, setMembershipId] = React.useState('');
     const [firstname, setFirstName] = React.useState('');
     const [currentBal, setCurrentBal] = React.useState('');
     const [Blockedpts, setBlockedPts] = React.useState('');
+    const [mostRedeemed, setMostRedeemed] = React.useState([]);
+    const [loading, setLoading] = React.useState(true)
 
     const firstLetter = firstname.charAt(0);
     const fixedBal = parseInt(currentBal)
@@ -38,6 +41,63 @@ const Home = () => {
     
         }
       ).catch(err => console.log(err));
+
+
+      const fetchMostRedeemed = () => {
+        setLoading(false)
+        const id = AsyncStorage.getItem('Mytoken').then(
+          res => {
+              
+              axios.get(`catalogue_items/most_redeemed`, {headers: {Authorization: res}})
+              .then(
+                  res => {
+                      setLoading(true); 
+                      console.log('mostRedeemed', res.data)
+                      const mostRedeemed = res.data.most_redeemed;
+                      setMostRedeemed(mostRedeemed)
+                     
+  
+                  }
+              )
+              .catch(err => {
+                setLoading(true); 
+                  const code = err.response.status;
+                  if (code === 401) {
+                      Alert.alert(
+                          'Error!',
+                          'Expired Token',
+                          [
+                            {text: 'OK', onPress: () => signOut()},
+                          ],
+                          { cancelable: false }
+                        )
+                    
+                  } else {
+                    setLoading(true); 
+                      Alert.alert(
+                          'Network Error',
+                          'Please Try Again',
+                          [
+                            {text: 'OK', onPress: () =>  setLoading(true)},
+                          ],
+                          { cancelable: false }
+                        )
+                  }
+  
+  
+              })
+          }
+      )
+      .catch( err => {console.log(err)}) 
+      }
+      useEffect(() => {
+        const unsubscribe = props.navigation.addListener('focus', () => {
+            fetchMostRedeemed()
+          });
+  
+        
+        return unsubscribe;
+      }, [props.navigation]);
 
     return (
         <ScrollView style = {styles.screen}>
@@ -82,22 +142,25 @@ const Home = () => {
                         </View>
                         <View style= {styles.recentlyViewed}>
                             <Text style= {styles.textRecent}>MOST REDEEMED ITEMS</Text>
-                            <HomeCard 
-                            price= "4083 Points"
-                            product= "Sunlight 2in1 Hand Washing Powder 2Kg"
-                            image= {require('../../assets/product.png')} />
-                            <HomeCard 
-                            price= "4083 Points"
-                            product= "Sunlight 2in1 Hand Washing Powder 2Kg"
-                            image= {require('../../assets/product.png')} />
-                            <HomeCard 
-                            price= "4083 Points"
-                            product= "Sunlight 2in1 Hand Washing Powder 2Kg"
-                            image= {require('../../assets/product.png')} />
-                            <HomeCard 
-                            price= "4083 Points"
-                            product= "Sunlight 2in1 Hand Washing Powder 2Kg"
-                            image= {require('../../assets/product.png')} />
+                            {loading ?
+                            <View>
+                                 {mostRedeemed.map((item, index) => {
+                                     return (
+                                        <HomeCard 
+                                        btnPressed= {() => props.navigation.navigate('Product', {
+                                            name: item.Merchandize_item_name, item_code: item.Item_code,
+                                            price: item.Price, image:item.Item_image,
+                                            description: item.Merchandise_item_description})}
+                                        key= {index}
+                                        price= {`${item.Price} points`}
+                                        product= {item.Merchandize_item_name}
+                                        image= {{uri: item.Item_image}} />  
+                                     )                                 
+                                 })}
+                            </View>
+                           
+                        : null
+                        }
                         </View>
                        
                     </View>

@@ -82,6 +82,7 @@ const StatementPage = () => {
     if (loaded) {
         showStatement = (
             statements.map((statement, index) => {
+                console.log('statements', statement)
                 const stringedDate = statement.Transaction_date.slice(0, 10)
                 const myDate = new Date(stringedDate);
                 const day = myDate.getDate();
@@ -121,7 +122,7 @@ const StatementPage = () => {
                         <StatementCard
                         transDes = {statement.Description}
                         date =  {displayDate}
-                        figure= {statement.Points_gained}
+                        figure= {statement.Points_used}
                         desc= {statement.Transaction_type} 
                         bg= "rgba(220, 222, 233, 0.301)"
                         color= "#ea0000"

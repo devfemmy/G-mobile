@@ -16,6 +16,8 @@ import CardNavigator from './Navigators/CardNavigator';
 import {Ionicons} from 'react-native-vector-icons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import CatalogNavigator from './Navigators/CatalogNavigator';
+import CartNavigator from './Navigators/CartNavigator';
+import WishListNavigator from './Navigators/WishlistNavigator';
 
 
 
@@ -161,7 +163,23 @@ const DrawerNav = (props) => {
                       drawerIcon: config => <Ionicons
                       size={22}
                       color= "white"
+                      name={Platform.OS === 'android' ? 'md-albums' : 'ios-albums'}></Ionicons>
+                    }}
+                    />
+                      {/* <Drawer.Screen name="My Cart" component={CartNavigator}
+                     options= {{
+                      drawerIcon: config => <Ionicons
+                      size={22}
+                      color= "white"
                       name={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}></Ionicons>
+                    }}
+                    /> */}
+                    <Drawer.Screen name="Wish List" component={WishListNavigator}
+                     options= {{
+                      drawerIcon: config => <Ionicons
+                      size={22}
+                      color= "white"
+                      name={Platform.OS === 'android' ? 'md-heart' : 'ios-heart'}></Ionicons>
                     }}
                     />
                     <Drawer.Screen name="Notification" component={NotificationNavigator}

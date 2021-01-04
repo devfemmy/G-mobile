@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
         textAlign: 'right'
     },
     imageStyle: {
-        width: 48,
-        height: 40,
+        width: 40,
+        height: 25,
         resizeMode: 'contain'
     }
 })

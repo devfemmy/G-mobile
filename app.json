@@ -9,7 +9,7 @@
       "android",
       "web"
     ],
-    "version": "2.0.0",
+    "version": "3.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -32,6 +32,6 @@
       "package": "com.LSL.grandloyalty",
       "versionCode": 1
     },
-    "description": ""
+    "description": "Grandsquare mobile app by Loyalty Solutions Limited"
   }
 }

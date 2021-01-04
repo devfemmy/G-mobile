@@ -16,29 +16,15 @@ import Checkout from '../../Screens/Catalogue/Checkout';
 
 const Stack = createStackNavigator();
 
-const CatalogNavigator = (props) => {
+const CartNavigator = (props) => {
     return (
         <>
         <Stack.Navigator>
-          <Stack.Screen name="Catalogue" component={Catalogue}
-          options={{ title: 'Catalogue', headerStyle: {
+        <Stack.Screen name="MyCart" component={Cart}
+          options={{ title: 'My Cart', headerStyle: {
               backgroundColor: Platform.OS === 'android' ? 'white' : 'white',
 
           },
-          // headerRight: () => (
-          //   <TouchableOpacity onPress= {() => props.navigation.navigate('Wishlist')}>
-          //     <Image 
-          //     style= {{width:25, height: 25, marginRight: 20}}
-          //     source= {require('../../assets/fav.png')} />
-          //   </TouchableOpacity>
-          // ),
-          headerRight: () => (
-            <HeaderButtons HeaderButtonComponent= {CustomHeaderButton}>
-              <Item title= "Menu"
-                iconName= "ios-cart"
-                onPress= {() => {props.navigation.navigate('Cart')}} />
-            </HeaderButtons>
-          ), 
           headerLeft: () => (
             <HeaderButtons HeaderButtonComponent= {CustomHeaderButton}>
               <Item title= "Menu"
@@ -57,28 +43,12 @@ const CatalogNavigator = (props) => {
           headerTintColor: Platform.OS === 'android' ? 'black' : Colors.primaryColor
         }}
           />
-          <Stack.Screen name="Shipping" component={ShippingAddress}
-          options={{ title: 'Shipping Address', headerStyle: {
-              backgroundColor: Platform.OS === 'android' ? 'white' : 'white',
-
-          },
-          headerTintColor: Platform.OS === 'android' ? 'black' : Colors.primaryColor
-        }}
-          />
         <Stack.Screen name="Wishlist" component={Wishlist}
           options={{ title: 'Wishlists', headerStyle: {
               backgroundColor: Platform.OS === 'android' ? 'white' : 'white',
 
           },
           // headerLeft: null,
-          headerTintColor: Platform.OS === 'android' ? 'black' : Colors.primaryColor
-        }}
-          />
-          <Stack.Screen name="Cart" component={Cart}
-          options={{ title: 'My Cart', headerStyle: {
-              backgroundColor: Platform.OS === 'android' ? 'white' : 'white',
-
-          },
           headerTintColor: Platform.OS === 'android' ? 'black' : Colors.primaryColor
         }}
           />
@@ -121,9 +91,6 @@ const CatalogNavigator = (props) => {
                 ), 
                 headerTintColor: Platform.OS === 'android' ? 'black' : Colors.primaryColor
             })
-        //     { title: 'Item Display', 
-          
-        // }
     
         }
           />
@@ -133,4 +100,4 @@ const CatalogNavigator = (props) => {
 }
 
 
-export default CatalogNavigator;
+export default CartNavigator;

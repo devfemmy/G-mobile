@@ -18,7 +18,15 @@ class Catalogue extends Component {
   }
 
   componentDidMount() {
-    this.makeRemoteRequest();
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      // do something
+      this.makeRemoteRequest();
+      console.log('request made')
+    });
+  }
+  componentWillUnmount() {
+    this._unsubscribe();
+    console.log('request unmounted')
   }
 
   makeRemoteRequest = () => {
@@ -41,6 +49,7 @@ class Catalogue extends Component {
                 }
             )
             .catch(err => {
+              this.setState({ loading: false });
                 const code = err.response.status;
                 if (code === 401) {
                     Alert.alert(
@@ -53,12 +62,12 @@ class Catalogue extends Component {
                       )
                   
                 } else {
-                    showLoaded(true)
+                  this.setState({ loading: false });
                     Alert.alert(
                         'Network Error',
                         'Please Try Again',
                         [
-                          {text: 'OK', onPress: () => setShowBtn(true)},
+                          {text: 'OK', onPress: () => this.setState({ loading: false })},
                         ],
                         { cancelable: false }
                       )

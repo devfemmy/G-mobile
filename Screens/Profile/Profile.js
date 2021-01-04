@@ -54,6 +54,7 @@ const ProfilePage = (props) => {
                         setFirstname(firstname);
                         setLastname(lastname);
                         setEmail(email);
+                        AsyncStorage.setItem('email', email);
                         setPhone(phone);
                         setCityId(city_id)
                         setStateId(state_id);
@@ -65,6 +66,7 @@ const ProfilePage = (props) => {
                     }
                 )
                 .catch(err => {
+                    setShowLoaded(true)
                     const code = err.response.status;
                     if (code === 401) {
                         Alert.alert(
@@ -82,7 +84,7 @@ const ProfilePage = (props) => {
                             'Network Error',
                             'Please Try Again',
                             [
-                              {text: 'OK', onPress: () => setShowBtn(true)},
+                              {text: 'OK', onPress: () => setShowLoaded(true)},
                             ],
                             { cancelable: false }
                           )

@@ -2,15 +2,18 @@ import React from 'react';
 import { View, StyleSheet, Image, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const HomeCard = (props) => {
+const CheckoutCard = (props) => {
     const styles = StyleSheet.create({
         container: {
-            flex: 1,
             flexDirection: 'row',
             width: '100%',
             maxHeight: 100,
             justifyContent: 'space-between',
             alignItems: 'center',
+
+        },
+        fullContainer: {
+            flex: 1,
             backgroundColor: '#fff',
             padding: 15,
             borderColor: '#EFEFEF',
@@ -27,32 +30,38 @@ const HomeCard = (props) => {
             fontWeight: 'bold'
         },
         prdContainer: {
-            width: '50%'
+            width: '50%',
+            marginLeft: 10
         },
         textStyle2: {
             color: '#A2A2A2'
+        },
+        flexContainer: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginVertical: 8
         }
     })
     return (
-        <View>
-                <TouchableOpacity style= {styles.container} onPress= {props.btnPressed}>
-                <Image source= {props.image} style= {styles.imageStyle} />
-                <View style= {styles.prdContainer}>
-                    <Text style= {styles.textStyle}>
-                        {props.product}
-                    </Text>
-                </View>
-                <View style= {{alignItems: 'flex-end'}}>
-                <Text style= {styles.textStyle2}>
-                    {props.price}
+        <View style= {styles.fullContainer}>
+            <View style= {styles.container}>
+            <Image source= {props.image} style= {styles.imageStyle} />
+            <View style= {styles.prdContainer}>
+                <Text style= {styles.textStyle}>
+                    {props.product}
                 </Text>
-                <TouchableOpacity onPress= {props.pressed}>
-                    <Image style= {{height: 20, width: 20, resizeMode: 'contain', marginTop: 5}} source= {props.deleteImg} />
-                </TouchableOpacity>
-                </View>
-            </TouchableOpacity>
+            </View>
+            <View>
+                {props.quantity}
+            </View>
+        </View>
+        <View style= {{marginTop: 8}}>
+            <Text>Redemption Type: <Text>
+            {props.delivery_type}</Text></Text>
+        </View>
         </View>
     )
 }
 
-export default HomeCard
+export default CheckoutCard

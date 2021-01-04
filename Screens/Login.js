@@ -2,11 +2,13 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, AsyncStorage,
      Image, TouchableWithoutFeedback, 
      Alert,Dimensions,
-     Keyboard, ScrollView, SafeAreaView, ActivityIndicator, ImageBackground} from 'react-native';
+     Keyboard, ScrollView, SafeAreaView, ActivityIndicator, ImageBackground, KeyboardAvoidingView, Platform} from 'react-native';
 import CustomButton from '../Components/button';
 import {AuthContext} from '../Navigation/DrawerNav'
 import FormInput from '../Components/FormInput';
 import axios from 'axios';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 
 
 const LoginPage = (props) => {
@@ -90,18 +92,22 @@ const LoginPage = (props) => {
       }
 
     return (
-        <ScrollView>
+        <ImageBackground source= {require('../assets/login.png')} style= {styles.imageBackground}>
+        <KeyboardAvoidingView behavior= {Platform.OS == 'ios' ? "padding" : "height"} style = {styles.screen}>
             {/* <SafeAreaView>
             <TouchableWithoutFeedback onPress= {keyboardClose}> */}
-            <View style = {styles.screen}>
-            <ImageBackground source= {require('../assets/login.png')} style= {styles.imageBackground}>
+
+          
+            
+         
+          
             <View style= {styles.imageContainer}>
             <Image 
             style= {styles.imageStyle}
             source={require('../assets/logo.png')} />
             </View>
-
-            <View style= {styles.loginContainer}>
+            <TouchableWithoutFeedback  onPress={Keyboard.dismiss}>
+            <ScrollView style= {styles.loginContainer}>
                 <Text style= {styles.textSyle}>Login</Text>
                 <Text style= {styles.textSyle2}>Login to your Grandsquare Account</Text>
                 <View style= {styles.inputContainer}>
@@ -136,12 +142,15 @@ const LoginPage = (props) => {
                         </Text>
                 </View>
  
-            </View>
-            </ImageBackground>
-        </View>
+            </ScrollView>
+            </TouchableWithoutFeedback>
+            {/* </KeyboardAvoidingView> */}
+          
+       
         {/* </TouchableWithoutFeedback>
             </SafeAreaView> */}
-        </ScrollView>
+        </KeyboardAvoidingView>
+        </ImageBackground>
 
 
     )
@@ -150,9 +159,12 @@ const LoginPage = (props) => {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        // backgroundColor: '#000075',
+        // backgroundColor: 'red',
         // paddingLeft: '8%',
         // paddingRight: '8%'
+    },
+    container: {
+        flex: 1
     },
     inputContainer: {
         marginVertical: 20
@@ -180,7 +192,8 @@ const styles = StyleSheet.create({
     },
     imageBackground: {
         width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height,
+        minHeight: Dimensions.get('window').height,
+        resizeMode: 'cover'
     },
     textSyle2: {
         color: 'white',

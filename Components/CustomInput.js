@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, ShadowPropTypesIOS } from 'react-native';
+import { View, StyleSheet, TextInput, ShadowPropTypesIOS, Text } from 'react-native';
 
 
 const CustomInput = (props) => {
@@ -27,10 +27,14 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         padding: 10,
         marginVertical: 5,
+      },
+      label: {
+          color: '#A2A2A2'
       }
 })
     return (
         <View>
+            {/* <Text style= {styles.label}> {props.label}</Text> */}
             <TextInput
             autoCapitalize= {props.capitalize}
             editable= {props.editable}

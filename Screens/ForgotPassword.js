@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet,Dimensions, Image, TextInput, TouchableWithoutFeedback, Keyboard, ScrollView, SafeAreaView, ImageBackground} from 'react-native';
+import {View, Text, StyleSheet,Dimensions, Image, TextInput, TouchableWithoutFeedback, 
+    Keyboard, ScrollView, SafeAreaView, ImageBackground, KeyboardAvoidingView} from 'react-native';
 import CustomButton from '../Components/button';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import CustomBtn from '../Components/CustomBtn';
@@ -11,12 +12,78 @@ const ForgotPassword = ({navigation}) => {
     const keyboardClose = () => {
         Keyboard.dismiss()
     }
+    const windowHeight = Dimensions.get('window').height;
+    const styles = StyleSheet.create({
+        screen: {
+            flex: 1,
+            // backgroundColor: '#D1181F',
+            margin: '8%'
+        },
+        imageBack: {
+            width: Dimensions.get('window').width,
+            minHeight: windowHeight,
+            // maxHeight: Dimensions.get('window').height,
+            // height: 250,
+            resizeMode: 'cover'
+        },
+        inputContainer: {
+            marginVertical: 20
+        },
+        btnTextStyle: {
+            textAlign: 'center',
+            color: 'white',
+            fontWeight: 'bold',
+            fontSize: 18,
+            marginVertical: 15
+        },
+        backContainer: {
+            marginVertical: 10,
+            alignItems: 'flex-start'
+        },
+        textSyle: {
+            color: 'white',
+            fontSize: 35,
+            fontWeight: 'bold'
+        },
+        inputStyle: {
+          color: 'white',
+          borderBottomColor: 'white',
+          borderBottomWidth: 1,
+          padding: 10,
+          marginVertical: 5,
+          
+          
+        },
+        textSyle2: {
+            color: 'white',
+            fontSize: 15,
+            marginVertical: 7,
+            opacity: 0.7
+        },
+        imageContainer: {
+            width: '100%',
+            marginVertical: 50
+        },
+        imageStyle: {
+            borderRadius: 10,
+            width: '100%',
+            height: 80
+        },
+        loginContainer: {
+            flex: 1,
+            marginVertical: 15
+        },
+        btnContainer: {
+            marginVertical: 10
+        }
+    })
     return (
-        <ScrollView>
+        
         <ImageBackground source= {require('../assets/password.png')} style= {styles.imageBack}>
-        <SafeAreaView  style = {styles.screen}>
+        <KeyboardAvoidingView behavior= {Platform.OS == 'ios' ? "padding" : "height"} style = {styles.screen}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             {/* <TouchableWithoutFeedback onPress= {keyboardClose}> */}
-        <View>
+        <ScrollView>
         <View style= {styles.backContainer}>
         <HeaderButtons HeaderButtonComponent= {CustomBtn}>
               <Item title= "Back"
@@ -57,80 +124,18 @@ const ForgotPassword = ({navigation}) => {
             </View>
 
 
-        </View>
+        </ScrollView>
         {/* </TouchableWithoutFeedback> */}
-         </SafeAreaView>
+         </TouchableWithoutFeedback>   
+        </KeyboardAvoidingView>
+
         </ImageBackground>
 
-        </ScrollView>
+        
 
 
     )
 }
 
-const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        // backgroundColor: '#D1181F',
-        margin: '8%'
-    },
-    imageBack: {
-        width: Dimensions.get('window').width,
-        minHeight: '100%',
-        // maxHeight: Dimensions.get('window').height,
-        // height: 250,
-        resizeMode: 'contain'
-    },
-    inputContainer: {
-        marginVertical: 20
-    },
-    btnTextStyle: {
-        textAlign: 'center',
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 18,
-        marginVertical: 15
-    },
-    backContainer: {
-        marginVertical: 10,
-        alignItems: 'flex-start'
-    },
-    textSyle: {
-        color: 'white',
-        fontSize: 35,
-        fontWeight: 'bold'
-    },
-    inputStyle: {
-      color: 'white',
-      borderBottomColor: 'white',
-      borderBottomWidth: 1,
-      padding: 10,
-      marginVertical: 5,
-      
-      
-    },
-    textSyle2: {
-        color: 'white',
-        fontSize: 15,
-        marginVertical: 7,
-        opacity: 0.7
-    },
-    imageContainer: {
-        width: '100%',
-        marginVertical: 50
-    },
-    imageStyle: {
-        borderRadius: 10,
-        width: '100%',
-        height: 80
-    },
-    loginContainer: {
-        flex: 1,
-        marginVertical: 15
-    },
-    btnContainer: {
-        marginVertical: 10
-    }
-})
 
 export default ForgotPassword

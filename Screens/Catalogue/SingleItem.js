@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import { View, StyleSheet,AsyncStorage,ActivityIndicator, Alert,Image, Text } from 'react-native';
 import axios from '../../axios.req';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import RNPickerSelect from 'react-native-picker-select';
-import Counter from "react-native-counters";
+import { AuthContext } from '../../Navigation/DrawerNav';
+import CustomInput from '../../Components/CustomInput';
 // import {Ionicons} from 'react-native-vector-icons'
 
 const SingleItem = (props) => {
@@ -13,11 +14,14 @@ const SingleItem = (props) => {
     const [branches, setBranches] = useState([]);
     const [SortedBranches, setsortedBranches] = useState([]);
     const [selectedBranch, setSelectedBranch] = useState(null);
-    const [quantity, setQuantity] = useState(1);
     const [remark, setRemark] = useState('');
+    const [remarkLabel, setRemarkLabel] = useState('');
+    const [description, setDescription] = useState('');
     const [redemption_method, setRedemption] = useState('');
-    const [showBtn, setShowBtn] = useState(true)
-    const [showBtn2, setShowBtn2] = useState(true)
+    const [showLabel, setShowLabel] = useState(false);
+    const [showBtn, setShowBtn] = useState(true);
+    const [showBtn2, setShowBtn2] = useState(true);
+    const { signOut} = React.useContext(AuthContext);
 
     useEffect(() => {
         console.log('item_code', item_code)
@@ -29,11 +33,19 @@ const SingleItem = (props) => {
                         setLoading(false);
                         console.log("items", res)  
                         const item = res.data;
+                        const description = res.data.Item_description;
+                        setDescription(description)
                         const branches = res.data.branches;
                         const redemption_method = res.data.Delivery_method;
-                        const remark = res.data.Remark_lable;
+                        const remark_label = res.data.Remark_lable;
+                        const showLabel = res.data.Enable_remark;
+                        if (showLabel === 1) {
+                          setShowLabel(true)
+                        }else {
+                          setShowLabel(false)
+                        }
                         setBranches(branches);
-                        setRemark(remark);
+                        setRemarkLabel(remark_label);
                         setRedemption(redemption_method)
                         const sortedBranches = branches.map((branch)=>{
                             return {label:branch.Branch_name,value:branch.Branch_code}
@@ -92,13 +104,13 @@ const SingleItem = (props) => {
                     remark: remark,
 
                 }
-                console.log(data, 'DDDDD')
+                // console.log(data, 'DDDDD')
                 axios.post('cart/add', data, {headers: {Authorization: res}})
                 .then(
                     res => {  
                       // console.log(res, "res")
                         setShowBtn(true)
-                        setSelectedBranch(null)
+                        // setSelectedBranch(null)
                         const message = res.data.message; 
                         alert(message);
                        
@@ -222,6 +234,7 @@ const SingleItem = (props) => {
       });
 
     return (
+      <ScrollView>
         <View style= {styles.container}>
             {/* <Text>View Catalogue</Text> */}
             <View style= {styles.flexContainer}>
@@ -236,6 +249,16 @@ const SingleItem = (props) => {
                       {`${price} Points`}
                   </Text>
               </View>
+             
+          </View>
+          <View>
+          <Text style= {{fontSize: 16, fontWeight: 'bold'}}>Item Description</Text>
+          <Text style= {styles.textStyle2}>{description}</Text>
+            {showLabel ?<CustomInput
+            // label= {remark} 
+            value= {remark}
+            changeText = {(remark) => setRemark(remark)}
+            placeholder= {remarkLabel} /> : null}
           </View>
           <View>
           <RNPickerSelect
@@ -254,12 +277,6 @@ const SingleItem = (props) => {
                     />
           </View>
           <View style= {styles.flexContainer2}>
-            <View>
-              <Counter
-            countTextStyle= {styles.countTextStyle}
-            buttonTextStyle= {styles.buttonTextStyle} 
-            buttonStyle= {styles.buttonStyle} start={quantity} onChange={(value) => setQuantity(value)} />
-            </View>
           <View style= {styles.containerWidth}>
           {showBtn2 ?<TouchableOpacity onPress= {addToWishList} style= {styles.buttonContainer2}>
                   <Text style= {styles.buttonText2}>
@@ -275,8 +292,11 @@ const SingleItem = (props) => {
                             ADD TO CART
                         </Text>
                 </TouchableOpacity> : <ActivityIndicator  size="large" color="#51087E" />} 
+                <Text onPress= {() => props.navigation.navigate('Catalogue')} style= {styles.shopping}>Continue Shopping</Text>
           </View>
         </View>
+      </ScrollView>
+
     )
 }
 
@@ -287,7 +307,8 @@ const styles = StyleSheet.create({
         padding: '8%'
     },
     containerWidth: {
-      width: '60%'
+      width: '100%',
+      marginTop: 10
     },
     btnContainer: {
         marginVertical: 25
@@ -303,6 +324,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 18
     },
+    shopping: {
+      fontWeight: 'bold',
+      fontSize: 18,
+      marginVertical: 15,
+      textAlign: 'center'
+    },
     flexContainer: {
         // maxWidth: Dimensions.get('window').width / 3 - 10, // Width / 3 - (marginLeft and marginRight for the components)
         justifyContent: 'center',
@@ -312,6 +339,12 @@ const styles = StyleSheet.create({
         margin:10,
         maxWidth: '100%'
         
+      },
+      textStyle2: {
+        marginVertical: 5,
+        fontSize: 15,
+        opacity: 0.8,
+        // fontWeight: 'bold'
       },
       flexContainer2: {
         justifyContent: 'space-between',

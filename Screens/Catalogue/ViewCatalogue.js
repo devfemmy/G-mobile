@@ -52,6 +52,7 @@ class ViewCatalog extends Component {
                 }
             )
             .catch(err => {
+              this.setState({ loading: false });
                 const code = err.response.status;
                 if (code === 401) {
                     Alert.alert(
@@ -64,7 +65,7 @@ class ViewCatalog extends Component {
                       )
                   
                 } else {
-                    showLoaded(true)
+                  this.setState({ loading: false });
                     Alert.alert(
                         'Network Error',
                         'Please Try Again',
@@ -209,9 +210,12 @@ class ViewCatalog extends Component {
             //   title={`${item.Merchandize_category_name}`}
             // />
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Product',
-            {name: item.Item_name, item_code: item.Item_code,
-            price: item.Price, image:item.Item_image
-            })}  >
+            {
+              name: item.Item_name, item_code: item.Item_code,
+            price: item.Price, image:item.Item_image,
+            description: item.Item_description
+            }
+            )}  >
           <View style= {styles.flexContainer}>
               <View style= {styles.card}>
                   <Image style= {styles.imageStyle} 
